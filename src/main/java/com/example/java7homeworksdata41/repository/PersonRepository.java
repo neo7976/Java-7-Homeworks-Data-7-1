@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -13,7 +14,11 @@ public class PersonRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional
     public List<Person> getPersonsByCity(String city) {
-        return null;
+        var resultCity = entityManager.createQuery(
+                "select c from Person c where c.city = :cityName order by c.surname")
+                .setParameter("cityName", city);
+        return resultCity.getResultList();
     }
 }
