@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8081/persons/by-city?city=MOSCOW
+GET http://localhost:8081/persons/user-city/by-city?city=MOSCOW
 
 
 ###

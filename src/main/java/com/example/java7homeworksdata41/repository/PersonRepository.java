@@ -1,24 +1,22 @@
 package com.example.java7homeworksdata41.repository;
 
 import com.example.java7homeworksdata41.entity.Person;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-public class PersonRepository {
+public interface PersonRepository extends JpaRepository<Person, Long> {
+    @Query(value = "select p from Person p where p.city= :city order by p.surname")
+    List<Person> findAllByCityOrderBySurname(@Param("city") String city);
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Query(value = "select p from Person p where p.age < :age order by p.age")
+    List<Person> findByAgeLessThanOrderByAge(@Min(0) @Param("age") int age);
 
-    @Transactional
-    public List<Person> getPersonsByCity(String city) {
-        var resultCity = entityManager.createQuery(
-                "select c from Person c where c.city = :cityName order by c.surname")
-                .setParameter("cityName", city);
-        return resultCity.getResultList();
-    }
+    @Query(value = "select p from Person p where p.name=:name and p.surname=:surname")
+    Optional<Person> findByNameAndSurname(@Param("name") String name,
+                                          @Param("surname") String surname);
 }
