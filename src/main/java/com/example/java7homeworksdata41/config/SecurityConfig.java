@@ -102,7 +102,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeHttpRequests().antMatchers("/persons/hello").authenticated()
                 .and()
-                .authorizeHttpRequests().anyRequest().permitAll();
+                .authorizeHttpRequests().antMatchers("/persons/").permitAll()
+                .and()
+                .authorizeHttpRequests().anyRequest().authenticated();
 
 
     }

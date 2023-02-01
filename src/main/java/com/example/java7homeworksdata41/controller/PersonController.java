@@ -42,5 +42,10 @@ public class PersonController {
         return "Hello " + auth.getName();
     }
 
+    @GetMapping("/")
+    public String homePage() {
+        return "Авторизуйся!";
+    }
+
 
 }
