@@ -1,4 +1,4 @@
-create schema homework7;
+create schema if not exists homework7;
 
 insert into persons(name, surname, age, phone_number, city_of_living)
 values ('Иван', 'Корнеев', 24, '9857851279', 'SPB');
