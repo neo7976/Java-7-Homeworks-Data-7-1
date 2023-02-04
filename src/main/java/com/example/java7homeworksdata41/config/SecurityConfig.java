@@ -14,6 +14,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -79,16 +81,22 @@ import org.springframework.security.web.SecurityFilterChain;
 //}
 
 @Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("Pasha").password("{noop}1234").authorities("City")
+                .withUser("Pasha").password(encoder().encode("Pasha1234")).roles("READ")
                 .and()
-                .withUser("Admin").password("{noop}admin").authorities("Admin")
+                .withUser("Dima").password(encoder().encode("Dima1234")).roles("WRITE")
                 .and()
-                .withUser("Olga").password("{noop}1234").authorities("Age");
+                .withUser("Olga").password(encoder().encode("Olga1234")).roles("DELETE");
     }
 
     @Override
