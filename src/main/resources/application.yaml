@@ -1,0 +1,11 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+                    github:
+                      client-id: e60dbbf2f08550667fd3
+                      client-secret: f4506e22fc1bf9edffeae9fc049c865a1e004d0d
+#          yandex.ru:
+#            client-id: 9740c6756b9c4cd6af86ddf63be0d10b
+#            client-secret: 8b6a23d92eba40a78f99a4d72e112b6e
